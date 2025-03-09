@@ -41,6 +41,7 @@ const ProductoSchema = new mongoose_1.Schema({
     marca: { type: String, required: true },
     nombre_proveedor: { type: [String], required: true },
     tamanio: { type: String, required: true },
+    categoria: { type: String, required: true },
     precio_pieza: { type: Number, required: true },
     precio_caja: { type: Number, required: true },
     cantidad_caja: { type: Number, required: true },
@@ -48,7 +49,7 @@ const ProductoSchema = new mongoose_1.Schema({
     estatus: { type: String, required: true },
     existencia_almacen: { type: Number, required: true },
     existencia_exhibe: { type: Number, required: true },
-    stock_almacen: { type: Number, required: true, default: 0 },
-    stock_exhibe: { type: Number, required: true, default: 0 },
+    stock_almacen: { type: Number, required: true },
+    stock_exhibe: { type: Number, required: true },
 });
 exports.default = mongoose_1.default.model('Producto', ProductoSchema);

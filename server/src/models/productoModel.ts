@@ -7,6 +7,7 @@ interface IProducto extends Document {
   marca: string;
   nombre_proveedor: string[];
   tamanio: string;
+  categoria: string;
   precio_pieza: number;
   precio_caja: number;
   cantidad_caja: number;
@@ -25,6 +26,7 @@ const ProductoSchema: Schema = new Schema({
   marca: { type: String, required: true },
   nombre_proveedor: { type: [String], required: true },
   tamanio: { type: String, required: true },
+  categoria: { type: String, required: true},
   precio_pieza: { type: Number, required: true },
   precio_caja: { type: Number, required: true },
   cantidad_caja: { type: Number, required: true },
@@ -32,8 +34,8 @@ const ProductoSchema: Schema = new Schema({
   estatus: { type: String, required: true },
   existencia_almacen: { type: Number, required: true },
   existencia_exhibe: { type: Number, required: true },
-  stock_almacen: { type: Number, required: true, default: 0 },
-  stock_exhibe: { type: Number, required: true, default: 0 },
+  stock_almacen: { type: Number, required: true },
+  stock_exhibe: { type: Number, required: true },
 });
 
 export default mongoose.model<IProducto>('Producto', ProductoSchema);

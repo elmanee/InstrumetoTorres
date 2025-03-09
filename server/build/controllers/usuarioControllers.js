@@ -19,14 +19,14 @@ const registerUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function
     const { nombre, email, password } = req.body;
     try {
         const salt = yield bcryptjs_1.default.genSalt(10);
-        const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
-        const newUsuario = new usuarioModel_1.default({
+        const contraseniaHashed = yield bcryptjs_1.default.hash(password, salt);
+        const nuevoUsuario = new usuarioModel_1.default({
             nombre,
             email,
-            password: hashedPassword,
+            password: contraseniaHashed,
         });
-        const savedUsuario = yield newUsuario.save();
-        res.status(201).json(savedUsuario);
+        const guardarUsuario = yield nuevoUsuario.save();
+        res.status(201).json(guardarUsuario);
     }
     catch (error) {
         res.status(400).json({ message: error.message });
@@ -36,15 +36,13 @@ exports.registerUsuario = registerUsuario;
 const loginUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
-        // Buscar usuario por email
         const usuario = yield usuarioModel_1.default.findOne({ email });
         if (!usuario) {
             res.status(404).json({ message: 'Usuario no encontrado' });
             return;
         }
-        // Verificar contraseña
-        const isMatch = yield bcryptjs_1.default.compare(password, usuario.password);
-        if (!isMatch) {
+        const esIgual = yield bcryptjs_1.default.compare(password, usuario.password);
+        if (!esIgual) {
             res.status(400).json({ message: 'Contraseña incorrecta' });
             return;
         }
