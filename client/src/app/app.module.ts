@@ -8,15 +8,6 @@ import { AlmacenistaComponent } from './componenets/almacenista/almacenista.comp
 import { AgregarProductoComponent } from './componenets/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './componenets/editar-producto/editar-producto.component';
 
-//material
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,14 +18,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatGridListModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
