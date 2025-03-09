@@ -21,10 +21,9 @@ class Server {
         this.app = (0, express_1.default)();
         this.config();
         this.routes();
-        (0, database_1.connectToDatabase)();
     }
     config() {
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', process.env.PORT || 45678);
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
     }

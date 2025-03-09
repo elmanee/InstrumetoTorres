@@ -10,11 +10,10 @@ class Server {
     this.app = express();
     this.config();
     this.routes();
-    connectToDatabase();
   }
 
   config(): void {
-    this.app.set('port', process.env.PORT || 3000);
+    this.app.set('port', process.env.PORT || 45678);
     this.app.use(express.json()); 
     this.app.use(express.urlencoded({ extended: true })); 
   }

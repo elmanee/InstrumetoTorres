@@ -1,0 +1,62 @@
+<div class="dashboard-container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary header">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" routerLink="/dashboard">
+        <img src="assets/logo.png" alt="Logo" class="logo me-2">
+        <span class="title">Sistema de Productos</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-3">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/dashboard"> 
+              <i class="bi bi-speedometer2"></i> Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/agregar"> 
+              <i class="bi bi-plus-circle"></i> Agregar
+            </a>
+          </li>
+        </ul>
+        
+        <form class="d-flex ms-auto search-bar">
+          <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Buscar">
+          <button class="btn btn-outline-light" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="main-content">
+    <router-outlet></router-outlet>
+
+    <div *ngIf="isDashboardRoot()" class="cards-container">
+      <div class="card dashboard-card" routerLink="/dashboard/agregar">
+        <div class="card-header d-flex align-items-center">
+          <i class="bi bi-box-seam card-icon me-2"></i>
+          <h5 class="card-title m-0">Nuevo Producto</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Registrar nuevo artículo en el catálogo</p>
+        </div>
+      </div>
+      
+      <div class="card dashboard-card" routerLink="/dashboard">
+        <div class="card-header d-flex align-items-center">
+          <i class="bi bi-list-check card-icon me-2"></i>
+          <h5 class="card-title m-0">Inventario</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Consulta total de existencias</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
