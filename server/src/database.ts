@@ -1,20 +1,12 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import keys from './keys';
 
-const client = new MongoClient(keys.mongoURI);
-
-async function connectToDatabase() {
+export const connectToDatabase = async () => {
   try {
-    await client.connect();
-    console.log('conectado a MongoDB');
-    return client.db(); 
+    await mongoose.connect(keys.mongoURI);
+    console.log('Conectado a MongoDB con Mongoose');
   } catch (error) {
     console.error('Error de conexión a MongoDB:', error);
-    process.exit(1); 
+    process.exit(1);
   }
-}
-
-connectToDatabase()
-
-
-export default client;
+};

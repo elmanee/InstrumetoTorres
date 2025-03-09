@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
-import './database';
-//import indexRoutes from './routes/indexRoutes';
+import { connectToDatabase } from './database';
+import usuarioRoutes from './routes/usuarioRoutes';
+import productoRoutes from './routes/productoRoutes'
 
 class Server {
   public app: Application;
@@ -9,20 +10,29 @@ class Server {
     this.app = express();
     this.config();
     this.routes();
+    connectToDatabase();
   }
 
   config(): void {
     this.app.set('port', process.env.PORT || 3000);
+    this.app.use(express.json()); 
+    this.app.use(express.urlencoded({ extended: true })); 
   }
 
   routes(): void {
-    //this.app.use('/', indexRoutes);
+    this.app.use('/api', usuarioRoutes);
+    this.app.use('/api', productoRoutes);
   }
 
-  start(): void {
-    this.app.listen(this.app.get('port'), () => {
-      console.log('Server on port', this.app.get('port'));
-    });
+  async start(): Promise<void> {
+    try {
+      await connectToDatabase(); 
+      this.app.listen(this.app.get('port'), () => {
+        console.log(`Server on port ${this.app.get('port')}`);
+      });
+    } catch (error) {
+      console.error('Error al iniciar el servidor:', error);
+    }
   }
 }
 

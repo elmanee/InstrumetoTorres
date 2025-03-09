@@ -12,21 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongodb_1 = require("mongodb");
+exports.connectToDatabase = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const keys_1 = __importDefault(require("./keys"));
-const client = new mongodb_1.MongoClient(keys_1.default.mongoURI);
-function connectToDatabase() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield client.connect();
-            console.log('conectado a MongoDB');
-            return client.db();
-        }
-        catch (error) {
-            console.error('Error de conexión a MongoDB:', error);
-            process.exit(1);
-        }
-    });
-}
-connectToDatabase();
-exports.default = client;
+const connectToDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield mongoose_1.default.connect(keys_1.default.mongoURI);
+        console.log('Conectado a MongoDB con Mongoose');
+    }
+    catch (error) {
+        console.error('Error de conexión a MongoDB:', error);
+        process.exit(1);
+    }
+});
+exports.connectToDatabase = connectToDatabase;
