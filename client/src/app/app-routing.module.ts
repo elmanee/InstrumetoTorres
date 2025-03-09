@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './componenets/dashboard/dashboard.component';
-import { AgregarProductoComponent } from './componenets/agregar-producto/agregar-producto.component';
-import { EditarProductoComponent } from './componenets/editar-producto/editar-producto.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AgregarProductoComponent } from './components/agregar-producto/agregar-producto.component';
+import { EditarProductoComponent } from './components/editar-producto/editar-producto.component';
 
 const routes: Routes = [
   {
