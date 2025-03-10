@@ -117,7 +117,7 @@ export const obtenerProductosCategoria = async (req: Request, res: Response): Pr
   }
 }
 
-export const obtnerProductosPasillo = async (req: Request, res:Response): Promise<void> => {
+export const obtenerProductosPasillo = async (req: Request, res:Response): Promise<void> => {
   const { pasillo } = req.params;
 
   try {

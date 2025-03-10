@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtnerProductosPasillo = exports.obtenerProductosCategoria = exports.obtenerProductosNombre = exports.obtenerProductoPorCodigo = exports.obtenerProductos = exports.crearProducto = void 0;
+exports.obtenerProductosPasillo = exports.obtenerProductosCategoria = exports.obtenerProductosNombre = exports.obtenerProductoPorCodigo = exports.obtenerProductos = exports.crearProducto = void 0;
 const productoModel_1 = __importDefault(require("../models/productoModel"));
 const crearProducto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { imagen, codigo_barras, nombre_producto, marca, nombre_proveedor, tamanio, categoria, precio_pieza, precio_caja, cantidad_caja, pasillo, estatus, existencia_almacen, existencia_exhibe, stock_almacen, stock_exhibe } = req.body;
@@ -105,7 +105,7 @@ const obtenerProductosCategoria = (req, res) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.obtenerProductosCategoria = obtenerProductosCategoria;
-const obtnerProductosPasillo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const obtenerProductosPasillo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { pasillo } = req.params;
     try {
         const pasillos = yield productoModel_1.default.find({ pasillo: { $regex: new RegExp(pasillo, 'i') } });
@@ -119,4 +119,4 @@ const obtnerProductosPasillo = (req, res) => __awaiter(void 0, void 0, void 0, f
         res.status(500).json({ message: error.message });
     }
 });
-exports.obtnerProductosPasillo = obtnerProductosPasillo;
+exports.obtenerProductosPasillo = obtenerProductosPasillo;

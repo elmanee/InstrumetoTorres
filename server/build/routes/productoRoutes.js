@@ -8,5 +8,5 @@ router.get('/obtener_productos', productoControllers_1.obtenerProductos);
 router.get('/obtener_producto/codigo/:codigo_barras', productoControllers_1.obtenerProductoPorCodigo);
 router.get('/obtener_producto/categoria/:categoria', productoControllers_1.obtenerProductosCategoria);
 router.get('/obtener_producto/nombre/:nombre_producto', productoControllers_1.obtenerProductosNombre);
-router.get('/obtener_producto/pasillo/:pasillo', productoControllers_1.obtnerProductosPasillo);
+router.get('/obtener_producto/pasillo/:pasillo', productoControllers_1.obtenerProductosPasillo);
 exports.default = router;

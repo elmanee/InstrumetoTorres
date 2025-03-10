@@ -99,3 +99,41 @@
   color: #6c757d;
   margin-top: 1rem;
 }
+
+/* Estilos Footer */
+
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-social a {
+  color: white;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.footer-text {
+  margin-top: 10px;
+  font-size: 14px;
+}

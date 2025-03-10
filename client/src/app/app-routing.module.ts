@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './almacenista/pages/dashboard/dashboard.component';
 import { AgregarProductoComponent } from './almacenista/pages/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './almacenista/pages/editar-producto/editar-producto.component';
 

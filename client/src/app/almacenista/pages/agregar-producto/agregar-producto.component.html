@@ -3,48 +3,51 @@
     <div class="form-left">
 
       <label for="codigo">Código de barras:</label>
-      <input type="number" id="codigo">
+      <input type="number" id="codigo" formControlName="codigo_barras" required>
 
       <label for="name">Nombre:</label>
-      <input type="text" id="name">
+      <input type="text" id="name" formControlName="nombre_producto" required>
 
       <label for="marca">Marca:</label>
-      <select class="marca form-select form-select-sm">
-        <option selected>Seleccionar</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select formControlName="marca" class="marca form-select">
+        <option selected disabled>Seleccionar</option>
+        <option value="SuKarne">SuKarne</option>
+        <option value="Bachoco">Bachoco</option>
       </select>
 
       <label for="proveedor">Proveedor (es):</label>
-      <select class="proveedor form-select form-select-sm">
-        <option selected>Seleccionar</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select formControlName="nombre_proveedor" class="proveedor form-select">
+        <option selected disabled>Seleccionar</option>
+        <option value="Javier Ortega">Javier Ortega</option>
+        <option value="Elena Ríos">Elena Ríos</option>
       </select>
 
-      <label for="tamanio">Tamaño:</label>
-      <select class="tamanio form-select form-select-sm">
-        <option selected>Seleccionar</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <label for="tamanio">Tamaño:</label><select formControlName="nombre_proveedor" class="proveedor form-select">
+        <option selected disabled>Seleccionar</option>
+        <option value="Javier Ortega">Javier Ortega</option>
+        <option value="Elena Ríos">Elena Ríos</option>
       </select>
 
       <label for="precio">Precio pieza:</label>
-      <input type="number" id="precio">
+      <input type="number" id="precio" formControlName="precio_pieza" required>
 
       <label for="pasillo">Pasillo:</label>
-      <select class="pasillo form-select form-select-sm">
-        <option selected>Seleccionar</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+      <input type="text" id="pasillo" formControlName="pasillo" required>
 
       <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad">
+      <input type="number" id="cantidad" formControlName="cantidad_caja" required>
+
+      <label for="existencia_almacen">Existencia en almacén:</label>
+      <input type="number" id="existencia_almacen" formControlName="existencia_almacen" required>
+
+      <label for="existencia_exhibe">Existencia en exhibición:</label>
+      <input type="number" id="existencia_exhibe" formControlName="existencia_exhibe" required>
+
+      <label for="stock_almacen">Stock en almacén:</label>
+      <input type="number" id="stock_almacen" formControlName="stock_almacen" required>
+
+      <label for="stock_exhibe">Stock en exhibición:</label>
+      <input type="number" id="stock_exhibe" formControlName="stock_exhibe" required>
     </div>
 
     <div class="form-right">
