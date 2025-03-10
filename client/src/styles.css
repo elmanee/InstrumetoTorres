@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/* Estilos generales */
+html, body { height: 100%; }
+body { margin: 0; font-family: "Century Gothic", sans-serif; }
+
 :root {
     --bs-primary: #901515;
   }
@@ -30,8 +35,3 @@
     outline: none !important;
     border: none !important; /* Opcional: elimina el borde */
 }
-
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

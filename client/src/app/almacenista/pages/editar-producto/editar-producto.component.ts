@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './editar-producto.component.css'
 })
 export class EditarProductoComponent {
+  constructor() { }
 
+  ngOnInit() {
+  }
 }

@@ -1,0 +1,63 @@
+<form id="product-form">
+  <div class="form-container">
+    <div class="form-left">
+
+      <label for="codigo">Código de barras:</label>
+      <input type="number" id="codigo">
+
+      <label for="name">Nombre:</label>
+      <input type="text" id="name">
+
+      <label for="marca">Marca:</label>
+      <select class="marca form-select form-select-sm">
+        <option selected>Seleccionar</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+
+      <label for="proveedor">Proveedor (es):</label>
+      <select class="proveedor form-select form-select-sm">
+        <option selected>Seleccionar</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+
+      <label for="tamanio">Tamaño:</label>
+      <select class="tamanio form-select form-select-sm">
+        <option selected>Seleccionar</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+
+      <label for="precio">Precio pieza:</label>
+      <input type="number" id="precio">
+
+      <label for="pasillo">Pasillo:</label>
+      <select class="pasillo form-select form-select-sm">
+        <option selected>Seleccionar</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad">
+    </div>
+
+    <div class="form-right">
+      <div class="image-preview" id="image-preview">
+        <span>Imagen</span>
+      </div>
+      <input type="file" id="image-upload" accept="image/*" class="upload-btn" onchange="previewImage(event)">
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button type="submit" class="submit-btn">
+      <span>Guardar</span>
+    </button>
+  </div>
+</form>
