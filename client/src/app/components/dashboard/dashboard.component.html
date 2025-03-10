@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-3">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/dashboard"> 
+            <a class="nav-link" routerLink="/dashboard"> 
               <i class="bi bi-speedometer2"></i> Inicio
             </a>
           </li>
@@ -22,12 +22,23 @@
               <i class="bi bi-plus-circle"></i> Agregar
             </a>
           </li>
+          <li class="nav-item dropdown">
+            <button class="btn dropdown-toggle bg-primary" data-bs-toggle="dropdown" aria-expanded="false">
+              Categoría
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Cerdo</a></li>
+              <li><a class="dropdown-item" href="#">Res</a></li>
+              <li><a class="dropdown-item" href="#">Pescado</a></li>
+              <li><a class="dropdown-item" href="#">Pollo</a></li>
+            </ul>
+          </li>
         </ul>
         
         <form class="d-flex ms-auto search-bar">
           <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Buscar">
           <button class="btn btn-outline-light" type="submit">
-            <i class="bi bi-search"></i>
+            <i class="bi bi-search">Buscar</i>
           </button>
         </form>
       </div>

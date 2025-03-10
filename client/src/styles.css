@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-    --bs-primary: #901515; /* Código HEX del rojo-700 */
+    --bs-primary: #901515;
   }
   
   .bg-primary {
@@ -16,7 +16,22 @@
     background-color: var(--bs-primary) !important;
     border-color: var(--bs-primary) !important;
   }
-  
+
+  /* Cambiar estilo del dropdown */
+  .dropdown-item:active, 
+  .dropdown-item:focus,
+  .dropdown-item:hover {
+    background-color: #d34141 !important;
+    color: black !important;
+  }
+
+  .btn.dropdown-toggle {
+    box-shadow: none !important; 
+    outline: none !important;
+    border: none !important; /* Opcional: elimina el borde */
+}
+
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
