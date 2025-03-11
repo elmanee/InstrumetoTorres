@@ -10,7 +10,8 @@ import {
   obtenerProductosTamanio,
   obtenerProductosPrecio,
   actualizarProducto,
-  eliminarProducto
+  eliminarProducto,
+  actualizarExistencias
 } from "../controllers/productoControllers";
 
 const router = Router();
@@ -26,6 +27,7 @@ router.get('/obtener_producto/tamanio/:tamanio', obtenerProductosTamanio);
 router.get('/obtener_producto/precio/:rango', obtenerProductosPrecio);
 router.patch('/actualizar_producto/:codigo_barras', actualizarProducto);
 router.delete('/eliminar_producto/:codigo_barras', eliminarProducto)
+router.patch('/actualizar_existencia/:codigo_barras', actualizarExistencias);
 
 
 

@@ -15,9 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.actualizarExistencias = exports.eliminarProducto = exports.actualizarProducto = exports.obtenerProductosPrecio = exports.obtenerProductosTamanio = exports.obtenerProductosMarca = exports.obtenerProductosPasillo = exports.obtenerProductosCategoria = exports.obtenerProductosNombre = exports.obtenerProductoPorCodigo = exports.obtenerProductos = exports.crearProducto = void 0;
 const productoModel_1 = __importDefault(require("../models/productoModel"));
 const historialPreciosModel_1 = __importDefault(require("../models/historialPreciosModel"));
+const loteCompraModel_1 = __importDefault(require("../models/loteCompraModel"));
 /creacion del producto/;
 const crearProducto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { imagen, codigo_barras, nombre_producto, marca, nombre_proveedor, tamanio, categoria, precio_pieza, precio_caja, cantidad_caja, pasillo, estatus, existencia_almacen, existencia_exhibe, stock_almacen, stock_exhibe } = req.body;
+    const { imagen, codigo_barras, nombre_producto, marca, nombre_proveedor, tamanio, categoria, precio_pieza, precio_caja, cantidad_caja, pasillo, existencia_almacen, existencia_exhibe, stock_almacen, stock_exhibe } = req.body;
     try {
         const existeProducto = yield productoModel_1.default.findOne({ codigo_barras });
         ;
@@ -37,7 +38,7 @@ const crearProducto = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             precio_caja,
             cantidad_caja,
             pasillo,
-            estatus,
+            estatus: "activo",
             existencia_almacen,
             existencia_exhibe,
             stock_almacen,
@@ -216,6 +217,7 @@ const actualizarProducto = (req, res) => __awaiter(void 0, void 0, void 0, funct
             return;
         }
         const registroHistorico = new historialPreciosModel_1.default({
+            codigo_barras: producto.codigo_barras,
             nombre_producto: producto.nombre_producto,
             marca: producto.marca,
             tamanio: producto.tamanio,
@@ -261,6 +263,45 @@ exports.eliminarProducto = eliminarProducto;
 /Actualizar existencias/;
 const actualizarExistencias = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { codigo_barras } = req.params;
-    const { valExistencia, valExhibe } = req.body;
+    const { valAlmacen, fecha_caducidad } = req.body;
+    try {
+        if (isNaN(Number(valAlmacen))) {
+            res.status(400).json({
+                message: 'El valor debe ser un numero valido'
+            });
+            return;
+        }
+        const producto = yield productoModel_1.default.findOne({ codigo_barras });
+        if (!producto) {
+            res.status(404).json({
+                message: 'Producto no encontrado'
+            });
+            return;
+        }
+        var numLote = 101;
+        const rellenoAlmacen = new loteCompraModel_1.default({
+            codigo_barras: producto.codigo_barras,
+            numero_lote: numLote,
+            nombre_producto: producto.nombre_producto,
+            cantidad_cajas: valAlmacen,
+            fecha_compra: new Date(),
+            fecha_caducidad: fecha_caducidad
+        });
+        producto.existencia_almacen = valAlmacen;
+        yield Promise.all([
+            producto.save(),
+            rellenoAlmacen.save()
+        ]);
+        res.status(200).json({
+            message: 'Existencia actualizadas',
+            producto_actualizado: producto
+        });
+        numLote++;
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
 });
 exports.actualizarExistencias = actualizarExistencias;

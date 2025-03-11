@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Producto from '../models/productoModel';
 import HistorialPrecios from "../models/historialPreciosModel";
+import LoteCompra from "../models/loteCompraModel";
 
 /creacion del producto/
 export const crearProducto = async (req: Request, res: Response): Promise<void> => {
@@ -15,8 +16,7 @@ export const crearProducto = async (req: Request, res: Response): Promise<void> 
     precio_pieza, 
     precio_caja, 
     cantidad_caja, 
-    pasillo, 
-    estatus, 
+    pasillo,  
     existencia_almacen, 
     existencia_exhibe ,
     stock_almacen,
@@ -42,7 +42,7 @@ export const crearProducto = async (req: Request, res: Response): Promise<void> 
       precio_caja,
       cantidad_caja,
       pasillo,
-      estatus,
+      estatus: "activo",
       existencia_almacen,
       existencia_exhibe,
       stock_almacen,
@@ -255,6 +255,7 @@ export const actualizarProducto = async (req: Request, res: Response): Promise<v
     }
 
     const registroHistorico = new HistorialPrecios({
+      codigo_barras: producto.codigo_barras,
       nombre_producto: producto.nombre_producto,
       marca: producto.marca,
       tamanio: producto.tamanio,
@@ -305,8 +306,54 @@ export const eliminarProducto = async (req: Request, res: Response): Promise<voi
 /Actualizar existencias/
 export const actualizarExistencias = async (req: Request, res:Response):Promise<void> => {
   const { codigo_barras } = req.params;
-  const { valExistencia, valExhibe } = req.body;
+  const { valAlmacen, fecha_caducidad } = req.body;
 
+  try {
+    if (isNaN(Number(valAlmacen))){
+      res.status(400).json({
+        message: 'El valor debe ser un numero valido'
+      });
+      return;
+    }
+
+    const producto = await Producto.findOne({ codigo_barras});
+
+    if (!producto){
+      res.status(404).json({
+        message: 'Producto no encontrado'
+      });
+      return;
+    }
+
+    var numLote = 101;
+
+    const rellenoAlmacen = new LoteCompra({
+      codigo_barras: producto.codigo_barras,
+      numero_lote: numLote,
+      nombre_producto: producto.nombre_producto,
+      cantidad_cajas: valAlmacen,
+      fecha_compra: new Date(),
+      fecha_caducidad: fecha_caducidad
+    })
+
+    producto.existencia_almacen = valAlmacen;
+
+    await Promise.all([
+      producto.save(),
+      rellenoAlmacen.save()
+    ])
+
+    res.status(200).json({
+      message: 'Existencia actualizadas',
+      producto_actualizado: producto
+    })
+
+    numLote++;
+  } catch (error:any) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
   
 }
 

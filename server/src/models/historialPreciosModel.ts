@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 interface IHistorialPrecios extends Document {
+  codigo_barras: number;
   nombre_producto: string;
   marca: string;
   tamanio: string;
@@ -10,6 +11,7 @@ interface IHistorialPrecios extends Document {
 }
 
 const HistorialPreciosSchema: Schema = new Schema({
+  codigo_barras: { type:Number, required: true},
   nombre_producto: { type: String, required: true },
   marca: { type: String, required: true },
   tamanio: { type: String, required: true },

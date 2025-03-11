@@ -31,7 +31,7 @@ const ProductoSchema: Schema = new Schema({
   precio_caja: { type: Number, required: true },
   cantidad_caja: { type: Number, required: true },
   pasillo: { type: String, required: true },
-  estatus: { type: String, required: true },
+  estatus: { type: String, required: true},
   existencia_almacen: { type: Number, required: true },
   existencia_exhibe: { type: Number, required: true },
   stock_almacen: { type: Number, required: true },

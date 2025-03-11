@@ -35,6 +35,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const HistorialPreciosSchema = new mongoose_1.Schema({
+    codigo_barras: { type: Number, required: true },
     nombre_producto: { type: String, required: true },
     marca: { type: String, required: true },
     tamanio: { type: String, required: true },

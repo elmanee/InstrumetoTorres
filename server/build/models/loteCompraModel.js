@@ -35,6 +35,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const LoteCompraSchema = new mongoose_1.Schema({
+    codigo_barras: { type: Number, required: true },
     numero_lote: { type: Number, required: true },
     nombre_producto: { type: String, required: true },
     cantidad_cajas: { type: Number, required: true },

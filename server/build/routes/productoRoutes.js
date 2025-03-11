@@ -14,4 +14,5 @@ router.get('/obtener_producto/tamanio/:tamanio', productoControllers_1.obtenerPr
 router.get('/obtener_producto/precio/:rango', productoControllers_1.obtenerProductosPrecio);
 router.patch('/actualizar_producto/:codigo_barras', productoControllers_1.actualizarProducto);
 router.delete('/eliminar_producto/:codigo_barras', productoControllers_1.eliminarProducto);
+router.patch('/actualizar_existencia/:codigo_barras', productoControllers_1.actualizarExistencias);
 exports.default = router;
