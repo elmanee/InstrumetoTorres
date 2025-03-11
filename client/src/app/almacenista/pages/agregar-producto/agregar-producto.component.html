@@ -22,20 +22,33 @@
         <option value="Elena Ríos">Elena Ríos</option>
       </select>
 
-      <label for="tamanio">Tamaño:</label><select formControlName="nombre_proveedor" class="proveedor form-select">
+      <label for="tamanio">Tamaño:</label><select formControlName="tamanio" class="tamanio form-select">
         <option selected disabled>Seleccionar</option>
-        <option value="Javier Ortega">Javier Ortega</option>
-        <option value="Elena Ríos">Elena Ríos</option>
+        <option value="100gr">100 gr</option>
+        <option value="250gr">250 gr</option>
+        <option value="500gr">500 gr</option>
+        <option value="1kg">1 Kg</option>
+      </select>
+      
+      <label for="categoria">Categoría:</label><select formControlName="categoria" class="categoria form-select">
+        <option selected disabled>Seleccionar</option>
+        <option value="100gr">100 gr</option>
+        <option value="250gr">250 gr</option>
+        <option value="500gr">500 gr</option>
+        <option value="1kg">1 Kg</option>
       </select>
 
-      <label for="precio">Precio pieza:</label>
-      <input type="number" id="precio" formControlName="precio_pieza" required>
-
+      <label for="precio-pieza">Precio pieza:</label>
+      <input type="number" id="precio-p" formControlName="precio_pieza" required>
+      
+      <label for="precio-caja">Precio caja:</label>
+      <input type="number" id="precio-c" formControlName="precio_caja" required>
+      
+      <label for="cantidad-caja">Cantidad caja:</label>
+      <input type="number" id="cantidad-c" formControlName="cantidad-caja" required>
+      
       <label for="pasillo">Pasillo:</label>
       <input type="text" id="pasillo" formControlName="pasillo" required>
-
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" formControlName="cantidad_caja" required>
 
       <label for="existencia_almacen">Existencia en almacén:</label>
       <input type="number" id="existencia_almacen" formControlName="existencia_almacen" required>

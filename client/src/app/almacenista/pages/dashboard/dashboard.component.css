@@ -54,9 +54,32 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
+.search-bar select {
+  appearance: none; /* Oculta el diseño por defecto del select */
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 8px 30px 8px 10px; /* Espacio a la derecha para la flecha */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  width: 200px; /* Ajusta el ancho según tu diseño */
+}
+
+/* Agrega un ícono de flecha personalizado */
 .search-bar {
-  width: 400px;
-  margin-left: auto;
+  position: relative;
+}
+
+.search-bar select::after {
+  content: "▼"; /* Símbolo de flecha */
+  font-size: 14px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .dropdown-toggle {

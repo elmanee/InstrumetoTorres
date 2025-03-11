@@ -22,25 +22,42 @@
               <i class="bi bi-plus-circle"></i> Agregar
             </a>
           </li>
-          <li class="nav-item dropdown">
-            <button class="nav-link dropdown-toggle bg-primary" data-bs-toggle="dropdown" aria-expanded="false">
-              Categoría
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Cerdo</a></li>
-              <li><a class="dropdown-item" href="#">Res</a></li>
-              <li><a class="dropdown-item" href="#">Pescado</a></li>
-              <li><a class="dropdown-item" href="#">Pollo</a></li>
-            </ul>
-          </li>
         </ul>
         
+        <!-- <div class="nav-search-scope nav-sprite">
+          <div class="nav-search-facade" data-value="search-alias=aps">
+            <span id="nav-search-label-id" class="nav-search-label nav-progressive-content" style="width: auto;">Todas las categorías</span>
+            <i class="nav-icon"></i>
+          </div>
+          <label id="searchDropdownDescription" for="searchDropdownBox" class="nav-progressive-attribute" style="display:none">Seleccionar el departamento en el que deseas buscar</label>
+          <select aria-describedby="searchDropdownDescription" class="nav-search-dropdown searchSelect nav-progressive-attrubute nav-progressive-search-dropdown" data-nav-digest="nY8IIe22vnbR3YfS6ZRBpK83baQ=" data-nav-selected="0" id="searchDropdownBox" name="url" style="display: block; top: 2.5px;" tabindex="0" title="Buscar en">
+              <option selected="selected" value="search-alias=">Todas las categorías</option>
+              <option value="search-alias=marca">Marca</option>
+              <option value="search-alias=nombre">Nombre</option>          
+              <option value="search-alias=tamanio">Tamaño</option>        
+              <option value="search-alias=codigo">Código</option>         
+              <option value="search-alias=pasillo">Pasillo</option>         
+          </select>
+        </div> -->
+
         <form class="d-flex ms-auto search-bar">
+          <label id="searchDropdownDescription" for="searchDropdownBox" class="nav-progressive-attribute" style="display:none">
+              Seleccionar el departamento en el que deseas buscar
+          </label>
+          <div class="position-relative">
+              <select id="searchDropdownBox" name="url" class="form-select">
+                  <option selected value="search-alias=">Todas las categorías</option>
+                  <option value="search-alias=marca">Marca</option>
+                  <option value="search-alias=nombre">Nombre</option>          
+                  <option value="search-alias=tamanio">Tamaño</option>        
+                  <option value="search-alias=codigo">Código</option>         
+                  <option value="search-alias=pasillo">Pasillo</option>         
+              </select>
+          </div>
           <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Buscar">
-          <button class="btn btn-outline-light" type="submit">
-            Buscar
-          </button>
-        </form>
+      </form>
+           
+      
       </div>
     </div>
   </nav>
