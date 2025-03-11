@@ -5,7 +5,12 @@ import {
   obtenerProductoPorCodigo, 
   obtenerProductosCategoria,
   obtenerProductosNombre,
-  obtenerProductosPasillo
+  obtenerProductosPasillo,
+  obtenerProductosMarca,
+  obtenerProductosTamanio,
+  obtenerProductosPrecio,
+  actualizarProducto,
+  eliminarProducto
 } from "../controllers/productoControllers";
 
 const router = Router();
@@ -16,5 +21,12 @@ router.get('/obtener_producto/codigo/:codigo_barras', obtenerProductoPorCodigo);
 router.get('/obtener_producto/categoria/:categoria', obtenerProductosCategoria);
 router.get('/obtener_producto/nombre/:nombre_producto', obtenerProductosNombre);
 router.get('/obtener_producto/pasillo/:pasillo', obtenerProductosPasillo);
+router.get('/obtener_producto/marca/:marca', obtenerProductosMarca);
+router.get('/obtener_producto/tamanio/:tamanio', obtenerProductosTamanio);
+router.get('/obtener_producto/precio/:rango', obtenerProductosPrecio);
+router.patch('/actualizar_producto/:codigo_barras', actualizarProducto);
+router.delete('/eliminar_producto/:codigo_barras', eliminarProducto)
+
+
 
 export default router;

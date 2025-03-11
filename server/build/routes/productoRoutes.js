@@ -9,4 +9,9 @@ router.get('/obtener_producto/codigo/:codigo_barras', productoControllers_1.obte
 router.get('/obtener_producto/categoria/:categoria', productoControllers_1.obtenerProductosCategoria);
 router.get('/obtener_producto/nombre/:nombre_producto', productoControllers_1.obtenerProductosNombre);
 router.get('/obtener_producto/pasillo/:pasillo', productoControllers_1.obtenerProductosPasillo);
+router.get('/obtener_producto/marca/:marca', productoControllers_1.obtenerProductosMarca);
+router.get('/obtener_producto/tamanio/:tamanio', productoControllers_1.obtenerProductosTamanio);
+router.get('/obtener_producto/precio/:rango', productoControllers_1.obtenerProductosPrecio);
+router.patch('/actualizar_producto/:codigo_barras', productoControllers_1.actualizarProducto);
+router.delete('/eliminar_producto/:codigo_barras', productoControllers_1.eliminarProducto);
 exports.default = router;

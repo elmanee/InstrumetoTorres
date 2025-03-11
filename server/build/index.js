@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const database_1 = require("./database");
 const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
 const productoRoutes_1 = __importDefault(require("./routes/productoRoutes"));
+const vendedorRoutes_1 = __importDefault(require("./routes/vendedorRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -30,6 +31,7 @@ class Server {
     routes() {
         this.app.use('/api', usuarioRoutes_1.default);
         this.app.use('/api', productoRoutes_1.default);
+        this.app.use('/api', vendedorRoutes_1.default);
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {

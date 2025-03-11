@@ -1,7 +1,8 @@
 import express, { Application } from 'express';
 import { connectToDatabase } from './database';
 import usuarioRoutes from './routes/usuarioRoutes';
-import productoRoutes from './routes/productoRoutes'
+import productoRoutes from './routes/productoRoutes';
+import vendedorRoutes from './routes/vendedorRoutes';
 
 class Server {
   public app: Application;
@@ -21,6 +22,7 @@ class Server {
   routes(): void {
     this.app.use('/api', usuarioRoutes);
     this.app.use('/api', productoRoutes);
+    this.app.use('/api', vendedorRoutes);
   }
 
   async start(): Promise<void> {

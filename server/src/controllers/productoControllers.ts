@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Producto from '../models/productoModel';
+import HistorialPrecios from "../models/historialPreciosModel";
 
+/creacion del producto/
 export const crearProducto = async (req: Request, res: Response): Promise<void> => {
   const { 
     imagen, 
@@ -54,6 +56,7 @@ export const crearProducto = async (req: Request, res: Response): Promise<void> 
   }
 };
 
+/obtiene todos los productos/
 export const obtenerProductos  = async (req: Request, res:Response):Promise<void> => {
   try {
     const productos = await Producto.find();
@@ -63,6 +66,7 @@ export const obtenerProductos  = async (req: Request, res:Response):Promise<void
   }
 }
 
+/obtiene producto por codigo de barras/
 export const obtenerProductoPorCodigo = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
 
@@ -78,6 +82,7 @@ export const obtenerProductoPorCodigo = async (req: Request, res: Response): Pro
   }
 }
 
+/obtiene producto por nombre/
 export const obtenerProductosNombre = async (req: Request, res: Response): Promise<void> => {
   const { nombre_producto } = req.params;
 
@@ -97,6 +102,7 @@ export const obtenerProductosNombre = async (req: Request, res: Response): Promi
   }
 }
 
+/obtiene producto por categoria/
 export const obtenerProductosCategoria = async (req: Request, res: Response): Promise<void> => {
   const { categoria } = req.params;
 
@@ -117,6 +123,7 @@ export const obtenerProductosCategoria = async (req: Request, res: Response): Pr
   }
 }
 
+/obtiene producto por pasillo/
 export const obtenerProductosPasillo = async (req: Request, res:Response): Promise<void> => {
   const { pasillo } = req.params;
 
@@ -137,5 +144,169 @@ export const obtenerProductosPasillo = async (req: Request, res:Response): Promi
   }
 }
 
+/obtiene producto por marca/
+export const obtenerProductosMarca = async (req: Request, res:Response): Promise<void> => {
+  const { marca } = req.params;
 
+  try {
+    const marcas = await Producto.find(
+      { marca: {$regex: new RegExp(marca,'i')}}
+    );
+
+    if( marcas.length === 0){
+      res.status(404).json({ message: `No existe la marca ${marca}`})
+      return
+    }
+
+    res.status(200).json(marcas);
+    
+  } catch (error:any) {
+    res.status(500).json({ message: error.message})
+  }
+}
+
+/obtiene producto por tamaño/
+export const obtenerProductosTamanio = async (req: Request, res: Response):Promise<void> => {
+  const { tamanio } = req.params;
+
+  try {
+    const tamanios = await Producto.find(
+      {tamanio: {$regex: new RegExp(tamanio,'i')}}
+    );
+
+    if(tamanios.length === 0){
+      res.status(404).json({ message: `No existen productos con este tamaño ${tamanio}`})
+    }
+
+    res.status(200).json({tamanios})
+  } catch (error:any) {
+    res.status(500).json({ message: error.message})
+  }
+}
+
+/obtiene producto por precio entre un rango/
+export const obtenerProductosPrecio = async (req: Request, res: Response): Promise<void> => {
+  const { rango } = req.params; 
+
+  try {
+    if (!rango.includes('-')) {
+      res.status(400).json({ message: 'Formato de rango invalido. Use 0-250, 250-650, etc.' });
+      return;
+    }
+
+    const [minStr, maxStr] = rango.split('-');
+    const min = parseFloat(minStr);
+    const max = parseFloat(maxStr);
+
+    if (isNaN(min) || isNaN(max)) {
+      res.status(400).json({ message: 'Los valores del rango deben ser numeros' });
+      return;
+    }
+
+    const productos = await Producto.find({
+      precio_pieza: { $gte: min, $lte: max }
+    });
+
+    if (productos.length === 0) {
+      res.status(404).json({ message: `No hay productos entre $${min} y $${max}` });
+      return;
+    }
+
+    res.status(200).json(productos);
+
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/*
+para probar actualizacion
+{
+  "nuevo_precio": 5410.45
+}
+*/
+
+/actualizar precio de un producto/
+export const actualizarProducto = async (req: Request, res: Response): Promise<void> => {
+  const { codigo_barras } = req.params;
+  const { nuevo_precio } = req.body;
+
+  try {
+    if (!codigo_barras || !nuevo_precio) {
+      res.status(400).json({ message: 'Faltan campos obligatorios' });
+      return;
+    }
+
+    if (isNaN(Number(nuevo_precio))) {
+      res.status(400).json({ message: 'El precio debe ser un número válido' });
+      return;
+    }
+
+    const producto = await Producto.findOne({ codigo_barras });
+    
+    if (!producto) {
+      res.status(404).json({ message: 'Producto no encontrado' });
+      return;
+    }
+
+    if (producto.precio_pieza === nuevo_precio) {
+      res.status(200).json({ message: 'El precio es el mismo, no se realizaron cambios' });
+      return;
+    }
+
+    const registroHistorico = new HistorialPrecios({
+      nombre_producto: producto.nombre_producto,
+      marca: producto.marca,
+      tamanio: producto.tamanio,
+      precio_anterior: producto.precio_pieza,
+      precio_nuevo: nuevo_precio,
+      fecha: new Date()
+    });
+
+    producto.precio_pieza = nuevo_precio;
+    
+    await Promise.all([
+      producto.save(),
+      registroHistorico.save()
+    ]);
+
+    res.status(200).json({ 
+      message: 'Precio actualizado e historial guardado',
+      producto_actualizado: producto
+    });
+
+  } catch (error: any) {
+    res.status(500).json({ 
+      message: 'Error al actualizar el precio'
+    });
+  }
+};
+
+/Elimar productos/
+export const eliminarProducto = async (req: Request, res: Response): Promise<void> => {
+  const { codigo_barras } = req.params;
+
+  try {
+    const resultado = await Producto.deleteOne({ codigo_barras });
+
+    if (resultado.deletedCount === 0) {
+      res.status(404).json({ message: 'El producto no existe' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Producto eliminado exitosamente' });
+  } catch (error:any) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+/Actualizar existencias/
+export const actualizarExistencias = async (req: Request, res:Response):Promise<void> => {
+  const { codigo_barras } = req.params;
+  const { valExistencia, valExhibe } = req.body;
+
+  
+}
 
