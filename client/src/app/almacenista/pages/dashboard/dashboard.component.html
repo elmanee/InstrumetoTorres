@@ -5,63 +5,47 @@
         <img src="assets/logo.png" alt="Logo" class="logo me-2">
         <span class="title">Sistema de Productos</span>
       </a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-3">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard"> 
+            <a class="nav-link" routerLink="/dashboard">
               <i class="bi bi-plus-circle"></i> Inicio
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard/agregar"> 
+            <a class="nav-link" routerLink="/dashboard/agregar">
               <i class="bi bi-plus-circle"></i> Agregar
             </a>
           </li>
         </ul>
-        
-        <!-- <div class="nav-search-scope nav-sprite">
-          <div class="nav-search-facade" data-value="search-alias=aps">
-            <span id="nav-search-label-id" class="nav-search-label nav-progressive-content" style="width: auto;">Todas las categorías</span>
-            <i class="nav-icon"></i>
-          </div>
-          <label id="searchDropdownDescription" for="searchDropdownBox" class="nav-progressive-attribute" style="display:none">Seleccionar el departamento en el que deseas buscar</label>
-          <select aria-describedby="searchDropdownDescription" class="nav-search-dropdown searchSelect nav-progressive-attrubute nav-progressive-search-dropdown" data-nav-digest="nY8IIe22vnbR3YfS6ZRBpK83baQ=" data-nav-selected="0" id="searchDropdownBox" name="url" style="display: block; top: 2.5px;" tabindex="0" title="Buscar en">
-              <option selected="selected" value="search-alias=">Todas las categorías</option>
-              <option value="search-alias=marca">Marca</option>
-              <option value="search-alias=nombre">Nombre</option>          
-              <option value="search-alias=tamanio">Tamaño</option>        
-              <option value="search-alias=codigo">Código</option>         
-              <option value="search-alias=pasillo">Pasillo</option>         
-          </select>
-        </div> -->
 
         <form class="d-flex ms-auto search-bar">
-          <label id="searchDropdownDescription" for="searchDropdownBox" class="nav-progressive-attribute" style="display:none">
-              Seleccionar el departamento en el que deseas buscar
+          <label id="searchDropdownDescription" for="searchDropdownBox" class="nav-progressive-attribute"
+            style="display:none">
+            Seleccionar el departamento en el que deseas buscar
           </label>
           <div class="position-relative">
-              <select id="searchDropdownBox" name="url" class="form-select">
-                  <option selected value="search-alias=">Todas las categorías</option>
-                  <option value="search-alias=marca">Marca</option>
-                  <option value="search-alias=nombre">Nombre</option>          
-                  <option value="search-alias=tamanio">Tamaño</option>        
-                  <option value="search-alias=codigo">Código</option>         
-                  <option value="search-alias=pasillo">Pasillo</option>         
-              </select>
+            <select id="searchDropdownBox" name="url" class="form-select">
+              <option selected value="search-alias=">Todas las categorías</option>
+              <option value="search-alias=marca">Marca</option>
+              <option value="search-alias=nombre">Nombre</option>
+              <option value="search-alias=tamanio">Tamaño</option>
+              <option value="search-alias=codigo">Código</option>
+              <option value="search-alias=pasillo">Pasillo</option>
+            </select>
           </div>
           <input class="form-control me-2" type="search" placeholder="Buscar productos" aria-label="Buscar">
-      </form>
-           
-      
+        </form>
       </div>
     </div>
   </nav>
-  
+
   <div class="main-content">
     <router-outlet></router-outlet>
 
@@ -75,8 +59,8 @@
           <p class="card-text">Registrar nuevo artículo en el catálogo</p>
         </div>
       </div>
-      
-      <div class="card dashboard-card" routerLink="/dashboard/Inventario">
+
+      <div class="card dashboard-card" data-bs-toggle="modal" data-bs-target="#inventarioModal">
         <div class="card-header d-flex align-items-center">
           <i class="bi bi-list-check card-icon me-2"></i>
           <h5 class="card-title m-0">Inventario</h5>
@@ -85,6 +69,69 @@
           <p class="card-text">Consulta total de existencias</p>
         </div>
       </div>
+
+      <div class="modal fade" id="inventarioModal" tabindex="-1" aria-labelledby="inventarioModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="inventarioModalLabel">Inventario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul class="nav nav-tabs" id="inventarioTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="precio-tab" data-bs-toggle="tab" data-bs-target="#precio"
+                    type="button" role="tab">Precio</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="almacen-tab" data-bs-toggle="tab" data-bs-target="#almacen" type="button"
+                    role="tab">Almacén</button>
+                </li>
+              </ul>
+
+              <div class="tab-content mt-3">
+                <div class="tab-pane fade show active" id="precio" role="tabpanel">
+                  <h6 class="text-center fw-bold">Nombre producto</h6>
+                  <div class="mb-3">
+                    <label class="form-label">Precio actual:</label>
+                    <input type="text" class="form-control" value="$20.00" readonly> <!-- Podemos cambiar precio desde base de datos -->
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Nuevo precio:</label>
+                    <input type="text" class="form-control" value="$30.00"> <!-- Podemos cambiar precio desde base de datos -->
+                  </div>
+                  <div class="text-center">
+                    <button class="btn btn-primary">Actualizar</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="almacen" role="tabpanel">
+                  <h6 class="text-center fw-bold">Nombre producto</h6>
+                  <div class="mb-3">
+                    <label class="form-label">Stock:</label>
+                    <input type="text" class="form-control" value="30" readonly> <!-- Podemos cambiar precio desde base de datos -->
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Existencia:</label>
+                    <input type="text" class="form-control" value="25" readonly> <!-- Podemos cambiar precio desde base de datos -->
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Agregar piezas:</label>
+                    <input type="number" class="form-control" value="5"> <!-- Podemos cambiar precio desde base de datos -->
+                  </div>
+                  <div class="d-flex justify-content-center gap-3">
+                    <button class="btn btn-danger">Actualizar</button>
+                    <button class="btn btn-secondary">Cancelar</button>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -92,7 +139,7 @@
   <div class="container">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="#">Inicio</a>
+        <a routerLink="/dashboard">Inicio</a>
         <a href="#">Acerca de</a>
         <a href="#">Servicios</a>
         <a href="#">Contacto</a>

@@ -123,6 +123,10 @@
   margin-top: 1rem;
 }
 
+.btn-secondary {
+  margin-left: 10%;
+}
+
 /* Estilos Footer */
 
 .footer {
