@@ -18,7 +18,7 @@ const keys_1 = __importDefault(require("./keys"));
 const connectToDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(keys_1.default.mongoURI);
-        console.log('Conectado a MongoDB con Mongoose');
+        console.log('Conectado a MongoDB');
     }
     catch (error) {
         console.error('Error de conexión a MongoDB:', error);
