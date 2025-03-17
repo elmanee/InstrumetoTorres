@@ -15,29 +15,30 @@ export class AgregarProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
-      imagen: ['url_imagen10.jpg', Validators.required],
-      codigo_barras: [12345678901378, Validators.required],
-      nombre_producto: ['Longaniza', Validators.required],
-      marca: ['Bachoco', Validators.required],
-      nombre_proveedor: [['Javier Ortega', 'Elena Ríos'], Validators.required],
-      tamanio: ['1 Kg', Validators.required],
-      categoria: ['Carne Cerdo', Validators.required],
-      precio_pieza: [32.00, Validators.required],
-      precio_caja: [300.00, Validators.required],
-      cantidad_caja: [12, Validators.required],
-      pasillo: ['C1', Validators.required],
-      estatus: ['activo', Validators.required],
-      existencia_almacen: [150, Validators.required],  // NUEVO
-      existencia_exhibe: [120, Validators.required],   // NUEVO
-      stock_almacen: [250, Validators.required],       // NUEVO
-      stock_exhibe: [200, Validators.required]         // NUEVO
+      imagen: ['', Validators.required],
+      codigo_barras: ['', Validators.required],
+      nombre_producto: ['', Validators.required],
+      marca: ['', Validators.required],
+      nombre_proveedor: ['', Validators.required],
+      tamanio: ['', Validators.required],
+      categoria: ['', Validators.required],
+      precio_pieza: ['', Validators.required],
+      precio_caja: ['', Validators.required],
+      cantidad_caja: ['', Validators.required],
+      pasillo: ['', Validators.required],
+      estatus: ['', Validators.required],
+      existencia_almacen: ['', Validators.required],
+      existencia_exhibe: ['', Validators.required], 
+      stock_almacen: ['', Validators.required],
+      stock_exhibe: ['', Validators.required]
     });
   }
 
-  onSubmit(): void {
-    if (this.productoForm.valid) {
-      console.log('Producto a enviar:', this.productoForm.value);
-      // Aquí puedes integrar la API para enviar los datos
+  onSubmit() {
+    if (this.productoForm.invalid) {
+      alert('Todos los campos son obligatorios. Revisa el formulario.');
+      return;
     }
+    console.log('Formulario enviado:', this.productoForm.value);
   }
 }

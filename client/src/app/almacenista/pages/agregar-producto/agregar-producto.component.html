@@ -1,4 +1,4 @@
-<form id="product-form">
+<form [formGroup]="productoForm" (ngSubmit)="onSubmit()" id="product-form">
   <div class="form-container">
     <div class="form-left">
 
@@ -30,12 +30,13 @@
         <option value="1kg">1 Kg</option>
       </select>
 
-      <label for="categoria">Categoría:</label><select formControlName="categoria" class="categoria form-select">
+      <label for="categoria">Categoría:</label>
+      <select formControlName="categoria" class="categoria form-select">
         <option selected disabled>Seleccionar</option>
-        <option value="100gr">100 gr</option>
-        <option value="250gr">250 gr</option>
-        <option value="500gr">500 gr</option>
-        <option value="1kg">1 Kg</option>
+        <option value="100gr">Cerdo</option>
+        <option value="250gr">Pescado</option>
+        <option value="500gr">Pollo</option>
+        <option value="1kg">Res</option>
       </select>
 
       <label for="precio-pieza">Precio pieza:</label>
@@ -45,10 +46,16 @@
       <input type="number" id="precio-c" formControlName="precio_caja" required>
 
       <label for="cantidad-caja">Cantidad caja:</label>
-      <input type="number" id="cantidad-c" formControlName="cantidad-caja" required>
+      <input type="number" id="cantidad-c" formControlName="cantidad_caja" required>
 
       <label for="pasillo">Pasillo:</label>
-      <input type="text" id="pasillo" formControlName="pasillo" required>
+      <select formControlName="categoria" class="categoria form-select">
+        <option selected disabled>Seleccionar</option>
+        <option value="100gr">Cerdo</option>
+        <option value="250gr">Pescado</option>
+        <option value="500gr">Pollo</option>
+        <option value="1kg">Res</option>
+      </select>
 
       <label for="existencia_almacen">Existencia en almacén:</label>
       <input type="number" id="existencia_almacen" formControlName="existencia_almacen" required>

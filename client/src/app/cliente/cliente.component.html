@@ -40,7 +40,7 @@
     <div class="col" *ngFor="let producto of productos">
       <div class="card h-100 product-card" (click)="abrirModal(producto)" style="cursor: pointer;">
         <img
-          [src]="producto.imagen || 'assets/images/placeholder.jpg'"
+          [src]="producto.imagen || 'assets/placeholder.jpg'"
           class="card-img-top product-image"
           [alt]="producto.nombre_producto">
         <div class="card-body text-center">
@@ -61,7 +61,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <img [src]="selectedProducto?.imagen || 'assets/images/placeholder.jpg'" class="img-fluid" alt="{{ selectedProducto?.nombre_producto }}">
+        <img [src]="selectedProducto?.imagen || 'assets/placeholder.jpg'" class="img-fluid" alt="{{ selectedProducto?.nombre_producto }}">
         <p class="mt-3">{{ selectedProducto?.descripcion }}</p>
         <p><strong>Marca:</strong> {{ selectedProducto?.marca }}</p>
         <p><strong>Tamaño:</strong> {{ selectedProducto?.tamanio }}</p>
@@ -74,3 +74,21 @@
     </div>
   </div>
 </div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a routerLink="/dashboard">Inicio</a>
+        <a href="#">Acerca de</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contacto</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <p class="footer-text">&copy; 2024 CARNICERÍA UTNG</p>
+  </div>
+</footer>
