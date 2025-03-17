@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const clienteControllers_1 = require("../controllers/clienteControllers");
+const router = (0, express_1.Router)();
+router.get('/obtener_productos/cliente', clienteControllers_1.obtenerProductosActivos);
+router.get('/obtener_productos/cliente/nombre/:nombre_producto', clienteControllers_1.obtenerProductosNombre);
+router.get('/obtener_productos/cliente/tama/:tamanio', clienteControllers_1.obtenerProductosTamanio);
+router.get('/obtener_productos/cliente/precio/:rango', clienteControllers_1.obtenerProductosPrecio);
+router.get('/obtener_productos/cliente/marca/:marca', clienteControllers_1.obtenerProductosMarca);
+exports.default = router;

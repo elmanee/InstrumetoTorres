@@ -3,8 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './almacenista/pages/dashboard/dashboard.component';
 import { AgregarProductoComponent } from './almacenista/pages/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './almacenista/pages/editar-producto/editar-producto.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 const routes: Routes = [
+  {
+    path:'cliente',
+    component: ClienteComponent,
+    data: { name: 'Cliente'}
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -15,7 +21,7 @@ const routes: Routes = [
     ]
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: '/dashboard' } // Ruta comodín para 404
+  { path: '**', redirectTo: '/dashboard' }
 ];
 
 @NgModule({

@@ -11,8 +11,9 @@ import {
   obtenerProductosPrecio,
   actualizarProducto,
   eliminarProducto,
-  actualizarExistencias
-} from "../controllers/productoControllers";
+  actualizarExistencias,
+  cambiarEstatus
+} from "../controllers/almacenistaControllers";
 
 const router = Router();
 
@@ -28,7 +29,7 @@ router.get('/obtener_producto/precio/:rango', obtenerProductosPrecio);
 router.patch('/actualizar_producto/:codigo_barras', actualizarProducto);
 router.delete('/eliminar_producto/:codigo_barras', eliminarProducto)
 router.patch('/actualizar_existencia/:codigo_barras', actualizarExistencias);
-
+router.patch('/actualizar_estatus/:codigo_barras', cambiarEstatus);
 
 
 export default router;

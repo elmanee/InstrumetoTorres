@@ -1,17 +1,29 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ProductoService {
-//   private apiUrl = 'mongodb://localhost:27017/tienda'
-//   // private apiUrl = 'mongodb://127.0.0.1:27017/tienda' // ! Lo mismo que la línea anterior
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductoService {
+  private APIURL = 'http://localhost:3000';
 
-//   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-//   crearProducto(producto: any): Observable <any> {
-//     return this.http.post(`${this.apiUrl}/agregar`, producto);
-//   }
-// }
+  crearProducto(producto: any): Observable<any> {
+    return this.http.post(`${this.APIURL}/crear_productos`, producto);
+  }
+
+  obtenerProductos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.APIURL}/obtener_productos`);
+  }
+
+  obtenerProductoPorCodigo(codigoBarras: string): Observable<any> {
+    return this.http.get<any>(`${this.APIURL}/obtener_producto/codigo/${codigoBarras}`);
+  }
+
+  obtenerProductosPorCategoria(categoria: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.APIURL}/obtener_producto/categoria/${categoria}`);
+  }
+
+}

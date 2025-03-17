@@ -6,25 +6,26 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './almacenista/pages/dashboard/dashboard.component';
 import { AgregarProductoComponent } from './almacenista/pages/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './almacenista/pages/editar-producto/editar-producto.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { RellenarProductoComponent } from './vendedor/pages/rellenar-producto/rellenar-producto.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     AgregarProductoComponent,
+    DashboardComponent,
     EditarProductoComponent,
-    // FooterComponent,
-    // ReactiveFormsModule,
-    // HttpClient,
-    // RellenarProductoComponent
+    ClienteComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

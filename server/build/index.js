@@ -14,9 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const database_1 = require("./database");
-const usuarioRoutes_1 = __importDefault(require("./routes/usuarioRoutes"));
-const productoRoutes_1 = __importDefault(require("./routes/productoRoutes"));
+const clienteRoutes_1 = __importDefault(require("./routes/clienteRoutes"));
+const almacenistaRoutes_1 = __importDefault(require("./routes/almacenistaRoutes"));
 const vendedorRoutes_1 = __importDefault(require("./routes/vendedorRoutes"));
+const cors_1 = __importDefault(require("cors"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -25,12 +26,13 @@ class Server {
     }
     config() {
         this.app.set('port', process.env.PORT || 3000);
+        this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
     }
     routes() {
-        this.app.use('/api', usuarioRoutes_1.default);
-        this.app.use('/api', productoRoutes_1.default);
+        this.app.use('/api', clienteRoutes_1.default);
+        this.app.use('/api', almacenistaRoutes_1.default);
         this.app.use('/api', vendedorRoutes_1.default);
     }
     start() {

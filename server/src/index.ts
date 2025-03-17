@@ -1,8 +1,9 @@
 import express, { Application } from 'express';
 import { connectToDatabase } from './database';
-import usuarioRoutes from './routes/usuarioRoutes';
-import productoRoutes from './routes/productoRoutes';
+import clienteRoutes from './routes/clienteRoutes';
+import almacenistaRoutes from './routes/almacenistaRoutes';
 import vendedorRoutes from './routes/vendedorRoutes';
+import cors from 'cors';
 
 class Server {
   public app: Application;
@@ -15,13 +16,14 @@ class Server {
 
   config(): void {
     this.app.set('port', process.env.PORT || 3000);
+    this.app.use(cors());
     this.app.use(express.json()); 
     this.app.use(express.urlencoded({ extended: true })); 
   }
 
   routes(): void {
-    this.app.use('/api', usuarioRoutes);
-    this.app.use('/api', productoRoutes);
+    this.app.use('/api', clienteRoutes);
+    this.app.use('/api', almacenistaRoutes);
     this.app.use('/api', vendedorRoutes);
   }
 

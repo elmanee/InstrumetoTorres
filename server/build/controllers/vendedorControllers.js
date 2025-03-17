@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerProductosPasillo = exports.obtenerProductosTamanio = exports.obtenerProductosMarca = exports.obtenerProductoPorCodigo = exports.obtenerProductosNombre = void 0;
+exports.actualizarExhibe = exports.obtenerProductosPrecio = exports.obtenerProductosPasillo = exports.obtenerProductosTamanio = exports.obtenerProductosMarca = exports.obtenerProductoPorCodigo = exports.obtenerProductosNombre = void 0;
 const productoModel_1 = __importDefault(require("../models/productoModel"));
-/obtiene producto por nombre/;
+const historialExhibe_1 = __importDefault(require("../models/historialExhibe"));
+/obtiene producto por nombre- vendedor/;
 const obtenerProductosNombre = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre_producto } = req.params;
     try {
@@ -30,7 +31,7 @@ const obtenerProductosNombre = (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.obtenerProductosNombre = obtenerProductosNombre;
-/obtiene producto por codigo de barras/;
+/obtiene producto por codigo de barras- vendedor/;
 const obtenerProductoPorCodigo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { codigo_barras } = req.params;
     try {
@@ -47,7 +48,7 @@ const obtenerProductoPorCodigo = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.obtenerProductoPorCodigo = obtenerProductoPorCodigo;
-/obtiene producto por marca/;
+/obtiene producto por marca- vendedor/;
 const obtenerProductosMarca = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { marca } = req.params;
     try {
@@ -63,6 +64,7 @@ const obtenerProductosMarca = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.obtenerProductosMarca = obtenerProductosMarca;
+/obtiene producto por tamaño- vendedor/;
 const obtenerProductosTamanio = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tamanio } = req.params;
     try {
@@ -77,7 +79,7 @@ const obtenerProductosTamanio = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.obtenerProductosTamanio = obtenerProductosTamanio;
-/obtiene producto por pasillo/;
+/obtiene producto por pasillo- vendedor/;
 const obtenerProductosPasillo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { pasillo } = req.params;
     try {
@@ -93,4 +95,69 @@ const obtenerProductosPasillo = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.obtenerProductosPasillo = obtenerProductosPasillo;
-/Actualiza existencia/;
+/obtiene producto por precio entre un rango- vendedor/;
+const obtenerProductosPrecio = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { rango } = req.params;
+    try {
+        if (!rango.includes('-')) {
+            res.status(400).json({ message: 'Formato de rango invalido. Use 0-250, 250-650, etc.' });
+            return;
+        }
+        const [minStr, maxStr] = rango.split('-');
+        const min = parseFloat(minStr);
+        const max = parseFloat(maxStr);
+        if (isNaN(min) || isNaN(max)) {
+            res.status(400).json({ message: 'Los valores del rango deben ser numeros' });
+            return;
+        }
+        const productos = yield productoModel_1.default.find({
+            precio_pieza: { $gte: min, $lte: max }
+        });
+        if (productos.length === 0) {
+            res.status(404).json({ message: `No hay productos entre $${min} y $${max}` });
+            return;
+        }
+        res.status(200).json(productos);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.obtenerProductosPrecio = obtenerProductosPrecio;
+/Actualiza existencia-exhibe/;
+const actualizarExhibe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { codigo_barras } = req.params;
+    const { cantidadIn } = req.body;
+    try {
+        const producto = yield productoModel_1.default.findOne({ codigo_barras });
+        if (!producto) {
+            res.status(404).json({
+                message: 'Producto no encontrado'
+            });
+            return;
+        }
+        var cantAlamcen = producto.existencia_almacen;
+        var cantAct = cantAlamcen - cantidadIn;
+        const agregacionExhibe = new historialExhibe_1.default({
+            codigo_barras: producto.codigo_barras,
+            nombre_producto: producto.nombre_producto,
+            cantidad: cantidadIn,
+            fecha_relleno: new Date()
+        });
+        producto.existencia_almacen = cantAct;
+        yield Promise.all([
+            producto.save(),
+            agregacionExhibe.save()
+        ]);
+        res.status(200).json({
+            message: 'Exhibe fue actualizado',
+            producto_actualizado: producto
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
+exports.actualizarExhibe = actualizarExhibe;

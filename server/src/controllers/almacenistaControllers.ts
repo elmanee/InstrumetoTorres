@@ -3,7 +3,7 @@ import Producto from '../models/productoModel';
 import HistorialPrecios from "../models/historialPreciosModel";
 import LoteCompra from "../models/loteCompraModel";
 
-/creacion del producto/
+/creacion del producto almacenista/
 export const crearProducto = async (req: Request, res: Response): Promise<void> => {
   const { 
     imagen, 
@@ -56,7 +56,7 @@ export const crearProducto = async (req: Request, res: Response): Promise<void> 
   }
 };
 
-/obtiene todos los productos/
+/obtiene todos los productos almacenista/
 export const obtenerProductos  = async (req: Request, res:Response):Promise<void> => {
   try {
     const productos = await Producto.find();
@@ -66,7 +66,7 @@ export const obtenerProductos  = async (req: Request, res:Response):Promise<void
   }
 }
 
-/obtiene producto por codigo de barras/
+/obtiene producto por codigo de barras almacenista/
 export const obtenerProductoPorCodigo = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
 
@@ -82,7 +82,7 @@ export const obtenerProductoPorCodigo = async (req: Request, res: Response): Pro
   }
 }
 
-/obtiene producto por nombre/
+/obtiene producto por nombre almacenista/
 export const obtenerProductosNombre = async (req: Request, res: Response): Promise<void> => {
   const { nombre_producto } = req.params;
 
@@ -123,7 +123,7 @@ export const obtenerProductosCategoria = async (req: Request, res: Response): Pr
   }
 }
 
-/obtiene producto por pasillo/
+/obtiene producto por pasillo- almacenista/
 export const obtenerProductosPasillo = async (req: Request, res:Response): Promise<void> => {
   const { pasillo } = req.params;
 
@@ -144,7 +144,7 @@ export const obtenerProductosPasillo = async (req: Request, res:Response): Promi
   }
 }
 
-/obtiene producto por marca/
+/obtiene producto por marca- almacenista/
 export const obtenerProductosMarca = async (req: Request, res:Response): Promise<void> => {
   const { marca } = req.params;
 
@@ -165,7 +165,7 @@ export const obtenerProductosMarca = async (req: Request, res:Response): Promise
   }
 }
 
-/obtiene producto por tamaño/
+/obtiene producto por tamaño- almacenista/
 export const obtenerProductosTamanio = async (req: Request, res: Response):Promise<void> => {
   const { tamanio } = req.params;
 
@@ -226,7 +226,7 @@ para probar actualizacion
 }
 */
 
-/actualizar precio de un producto/
+/actualizar precio de un producto- - almacenista/
 export const actualizarProducto = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
   const { nuevo_precio } = req.body;
@@ -283,7 +283,7 @@ export const actualizarProducto = async (req: Request, res: Response): Promise<v
   }
 };
 
-/Elimar productos/
+/Elimar productos- almacenista/
 export const eliminarProducto = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
 
@@ -303,7 +303,37 @@ export const eliminarProducto = async (req: Request, res: Response): Promise<voi
   }
 }
 
-/Actualizar existencias/
+/Cambiar estatus de producto- almacenista/
+export const cambiarEstatus = async (req: Request, res : Response): Promise<void> => {
+  const { codigo_barras } = req.params;
+  const { status } = req.body;
+
+  try {
+    const producto = await Producto.findOne({ codigo_barras });
+
+    if (!producto){
+      res.status(404).json({
+        message: 'Producto no encontrado'
+      })
+      return;
+    }
+
+    producto.estatus = status;
+
+    await producto.save();
+
+    res.status(200).json({
+      message: 'Estatus fue actualizado',
+      producto_actualizado: producto
+    })
+  } catch (error:any) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
+/Actualizar existencias- almacenista/
 export const actualizarExistencias = async (req: Request, res:Response):Promise<void> => {
   const { codigo_barras } = req.params;
   const { valAlmacen, fecha_caducidad } = req.body;
