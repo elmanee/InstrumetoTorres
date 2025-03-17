@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService, Producto } from '../../../services/cliente.service';
 import * as bootstrap from 'bootstrap';
+import { ProductoService } from '../../../services/producto.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 declare var $: any;
 
@@ -9,7 +11,15 @@ declare var $: any;
   selector: 'app-dashboard',
   standalone: false,
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class DashboardComponent {
   productos: Producto[] = [];
@@ -29,7 +39,7 @@ export class DashboardComponent {
   }
 
   openInventoryModal() {
-    $('#inventoryModal').modal('show'); // Abre el modal
+    $('#inventoryModal').modal('show');
   }
 
   actualizarPrecio(producto: any) {
