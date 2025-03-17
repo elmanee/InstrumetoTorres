@@ -1,10 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 exports.default = {
-    // mongoURI: 'mongodb://127.0.0.1:27017/tienda' 
-    mongoURI: 'mongodb+srv://mane:123@cluster0.f258r.mongodb.net/tienda'
-    //*Monse si no te serive cambialo por esto
-    // 'mongodb://localhost:27017/tienda'
-    // es lo mismo pero si no te jala cambialo por eso
-    // NOTAAAA: primero debes ejecutar en el cmd mongod/
+    mongoURI: process.env.mongoURI
 };
