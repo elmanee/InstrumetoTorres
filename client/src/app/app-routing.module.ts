@@ -4,6 +4,7 @@ import { DashboardComponent } from './almacenista/pages/dashboard/dashboard.comp
 import { AgregarProductoComponent } from './almacenista/pages/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './almacenista/pages/editar-producto/editar-producto.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { InventarioComponent } from './almacenista/pages/inventario/inventario.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
     data: { name: 'Panel Principal' },
     children: [
       { path: 'agregar', component: AgregarProductoComponent, data: { name: 'Agregar Producto' }},
+      { path: 'inventario', component:  InventarioComponent, data: { name: 'Inventario' }},
       { path: 'editar/:id', component:  EditarProductoComponent, data: { name: 'Editar Producto' }}
     ]
   },

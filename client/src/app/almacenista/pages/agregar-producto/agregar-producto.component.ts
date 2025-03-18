@@ -15,7 +15,7 @@ export class AgregarProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
-      imagen: ['', Validators.required],
+      imagen: [''],
       codigo_barras: ['', Validators.required],
       nombre_producto: ['', Validators.required],
       marca: ['', Validators.required],
@@ -25,8 +25,8 @@ export class AgregarProductoComponent implements OnInit {
       precio_pieza: ['', Validators.required],
       precio_caja: ['', Validators.required],
       cantidad_caja: ['', Validators.required],
-      pasillo: ['', Validators.required],
-      estatus: ['', Validators.required],
+      pasillo: [''],
+      estatus: [''],
       existencia_almacen: ['', Validators.required],
       existencia_exhibe: ['', Validators.required], 
       stock_almacen: ['', Validators.required],
@@ -36,6 +36,7 @@ export class AgregarProductoComponent implements OnInit {
 
   onSubmit() {
     if (this.productoForm.invalid) {
+      console.log('Formulario malo :c', this.productoForm.value);
       alert('Todos los campos son obligatorios. Revisa el formulario.');
       return;
     }

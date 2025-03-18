@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { InventarioComponent } from './almacenista/pages/inventario/inventario.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgModule } from '@angular/core';
     AgregarProductoComponent,
     EditarProductoComponent,
     ClienteComponent,
-    DashboardComponent
+    DashboardComponent,
+    InventarioComponent
   ],
   imports: [
     BrowserModule,

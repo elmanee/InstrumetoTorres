@@ -18,6 +18,7 @@ const clienteRoutes_1 = __importDefault(require("./routes/clienteRoutes"));
 const almacenistaRoutes_1 = __importDefault(require("./routes/almacenistaRoutes"));
 const vendedorRoutes_1 = __importDefault(require("./routes/vendedorRoutes"));
 const cors_1 = __importDefault(require("cors"));
+const uploadRoutes_1 = __importDefault(require("./routes/uploadRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -29,11 +30,13 @@ class Server {
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
+        this.app.use('/uploads', express_1.default.static('uploads'));
     }
     routes() {
         this.app.use('/api', clienteRoutes_1.default);
         this.app.use('/api', almacenistaRoutes_1.default);
         this.app.use('/api', vendedorRoutes_1.default);
+        this.app.use('/api', uploadRoutes_1.default);
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {

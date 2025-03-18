@@ -25,34 +25,27 @@
           </li>
         </ul>
 
-        <form class="d-flex ms-auto search-bar" (submit)="$event.preventDefault()">
-          <div class="position-relative">
-            <select id="searchDropdownBox" name="url" class="form-select" [(ngModel)]="categoriaSeleccionada">
-              <option selected value="">Todas las categorías</option>
-              <option value="marca">Marca</option>
-              <option value="nombre">Nombre</option>
-              <option value="tamanio">Tamaño</option>
-              <option value="codigo">Código</option>
-              <option value="pasillo">Pasillo</option>
-            </select>
-            <input
-              class="form-control"
-              type="search"
-              placeholder="Buscar productos"
-              aria-label="Buscar"
-              [(ngModel)]="busquedaTexto"
-              (keyup.enter)="buscarProductos()">
-            <button class="btn btn-light" type="button" (click)="buscarProductos()">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
-          <input class="form-control me-2" type="search" 
-                 placeholder="Buscar productos" 
-                 aria-label="Buscar"
-                 [(ngModel)]="terminoBusqueda"
-                 (input)="buscarProductos()"
-                 name="searchTerm">
+        <form class="d-flex align-items-center ms-auto search-bar" (submit)="$event.preventDefault()">
+          <select id="searchDropdownBox" name="url" class="form-select me-2" [(ngModel)]="filtroSeleccionado">
+            <option selected value="">Todas las categorías</option>
+            <option value="marca">Marca</option>
+            <option value="nombre">Nombre</option>
+            <option value="tamanio">Tamaño</option>
+            <option value="codigo">Código</option>
+            <option value="pasillo">Pasillo</option>
+          </select>
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Buscar productos"
+            aria-label="Buscar"
+            [(ngModel)]="busquedaTexto"
+            (keyup.enter)="buscarProductos()">
+          <!-- <button class="btn btn-light" type="button" (click)="buscarProductos()">
+            <i class="bi bi-search"></i>
+          </button> -->
         </form>
+        
       </div>
     </div>
   </nav>
@@ -71,7 +64,7 @@
         </div>
       </div>
   
-      <div class="card dashboard-card" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+      <div class="card dashboard-card" routerLink="/dashboard/inventario">
         <div class="card-header d-flex align-items-center">
           <i class="bi bi-list-check card-icon me-2"></i>
           <h5 class="card-title m-0">Inventario</h5>

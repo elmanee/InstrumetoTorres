@@ -1,0 +1,36 @@
+<div class="inventario-container">
+    <h2>Inventario de Productos</h2>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Marca</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.marca }}</td>
+          <td>${{ producto.precio | number:'1.2-2' }}</td>
+          <td>{{ producto.stock }}</td>
+          <td>
+            <span [class.activo]="producto.activo" [class.inactivo]="!producto.activo">
+              {{ producto.activo ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-primary" (click)="actualizarProducto(producto)">Actualizar</button>
+            <button class="btn btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -26,4 +26,8 @@ export class ProductoService {
     return this.http.get<any[]>(`${this.APIURL}/obtener_producto/categoria/${categoria}`);
   }
 
+  eliminarProducto(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.APIURL}/eliminar/${id}`); // Ajusta la ruta según tu API
+  }
+
 }
