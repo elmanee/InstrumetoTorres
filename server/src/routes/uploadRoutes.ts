@@ -1,65 +1,43 @@
-import { Router, Request, Response } from 'express';
+import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs/promises';
 
 const router = Router();
 
-// Configurar Multer
+// ✅ Asegurar que la carpeta "uploads" existe
+import fs from 'fs';
+const uploadDir = path.join(__dirname, '../../uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// ✅ Configurar multer correctamente
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../../uploads'),
-  filename: (_req, file, cb) => {
-    cb(null, file.originalname);
+  destination: (req, file, cb) => {
+    cb(null, uploadDir); // Guarda las imágenes en "uploads/"
   },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Renombra el archivo con la fecha
+  }
 });
 
 const upload = multer({ storage });
 
-// Interfaz para los archivos subidos
-interface MulterFile {
-  path: string;
-  originalname: string;
-}
-
-// Función para mover archivos a la carpeta final
-const saveImage = async (file: MulterFile): Promise<string> => {
-  const newPath = path.join(__dirname, '../../uploads', file.originalname);
-  await fs.rename(file.path, newPath);
-  return newPath;
-};
-
-// Ruta para subir una imagen única
-router.post('/upload/single', upload.single('imagenPerfil'), async (req: Request, res: Response) => {
-  try {
-    const file = req.file as MulterFile;
-    if (!file) {
-      res.status(400).json({ error: 'No se recibió ninguna imagen' });
-      return;
-    }
-
-    const newPath = await saveImage(file);
-    res.json({ message: 'Imagen subida con éxito', path: newPath });
+router.post('/upload', upload.single('imagen'), async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req.file) {
+        res.status(400).json({ message: 'No se subió ninguna imagen' });
+        return;
+      }
+  
+      const imagePath = `/uploads/${req.file.filename}`;
+           
+      res.json({ message: 'Imagen subida con éxito', imagePath });
   } catch (error) {
-    console.error('Error al subir imagen:', error);
-    res.status(500).json({ error: 'Error en el servidor' });
+    const err = error as Error; // 🔹 Hacemos un cast explícito
+    res.status(500).json({ message: 'Error en el servidor', error: err.message });
   }
-});
-
-// Ruta para subir múltiples imágenes
-router.post('/upload/multi', upload.array('photos', 10), async (req: Request, res: Response) => {
-  try {
-    const files = req.files as MulterFile[];
-    if (!files || files.length === 0) {
-      res.status(400).json({ error: 'No se recibieron imágenes' });
-      return;
-    }
-
-    const savedPaths = await Promise.all(files.map(saveImage));
-    res.json({ message: 'Imágenes subidas con éxito', paths: savedPaths });
-  } catch (error) {
-    console.error('Error al subir imágenes:', error);
-    res.status(500).json({ error: 'Error en el servidor' });
-  }
-});
+  });
+  
 
 export default router;
