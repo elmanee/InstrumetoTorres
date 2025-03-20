@@ -4,8 +4,8 @@ import clienteRoutes from './routes/clienteRoutes';
 import almacenistaRoutes from './routes/almacenistaRoutes';
 import vendedorRoutes from './routes/vendedorRoutes';
 import cors from 'cors';
-import uploadRoutes from './routes/uploadRoutes';
-
+import uploadRoutes from './routes/uploadRoutes'
+import * as path from 'path';
 class Server {
   public app: Application;
 
@@ -17,10 +17,16 @@ class Server {
 
   config(): void {
     this.app.set('port', process.env.PORT || 3000);
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: 'http://localhost:4200', // Solo permite solicitudes desde Angular
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATH'],
+      allowedHeaders: ['Content-Type', 'Authorization']
+  }));
     this.app.use(express.json()); 
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use('/uploads', express.static('uploads')); 
+    this.app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); 
+    //console.log('Ruta de uploads:', path.join(__dirname, '../uploads'));
+    //this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
   }
 
   routes(): void {
