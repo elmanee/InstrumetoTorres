@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AgregarProductoComponent implements OnInit {
   productoForm!: FormGroup;
+  productos: any[] = [];
 
   constructor(private fb: FormBuilder) {}
 
@@ -40,6 +41,14 @@ export class AgregarProductoComponent implements OnInit {
       alert('Todos los campos son obligatorios. Revisa el formulario.');
       return;
     }
-    console.log('Formulario enviado:', this.productoForm.value);
+
+    // Agregar producto a la lista local
+    const nuevoProducto = this.productoForm.value;
+    this.productos.push(nuevoProducto);
+    console.log('Producto agregado:', nuevoProducto);
+    console.log('Lista actual de productos:', this.productos);
+
+    // Reiniciar el formulario
+    this.productoForm.reset();
   }
 }

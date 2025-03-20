@@ -56,7 +56,16 @@ exports.crearProducto = crearProducto;
 const obtenerProductos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const productos = yield productoModel_1.default.find();
-        res.status(200).json(productos);
+        if (productos.length === 0) {
+            res.status(404).json({
+                message: 'No hay productos'
+            });
+            return;
+        }
+        res.status(200).json({
+            message: 'Lista de productos',
+            lista: productos
+        });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

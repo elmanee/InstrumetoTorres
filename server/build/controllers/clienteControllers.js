@@ -20,7 +20,7 @@ const obtenerProductosActivos = (req, res) => __awaiter(void 0, void 0, void 0, 
         const productos = yield productoModel_1.default.find({ estatus: "activo" });
         if (productos.length === 0) {
             res.status(404).json({
-                message: 'No hay produtos'
+                message: 'No hay productos'
             });
             return;
         }

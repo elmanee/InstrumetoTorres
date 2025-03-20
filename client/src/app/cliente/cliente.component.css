@@ -93,11 +93,19 @@
 }
 
 /* Footer */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .footer {
-  background-color: #222;
+  background: #343a40;
   color: white;
-  padding: 20px 0;
   text-align: center;
+  padding: 10px 0;
+  position: relative;
+  width: 100%;
 }
 
 .footer-content {

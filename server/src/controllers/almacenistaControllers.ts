@@ -5,37 +5,37 @@ import LoteCompra from "../models/loteCompraModel";
 
 /creacion del producto almacenista/
 export const crearProducto = async (req: Request, res: Response): Promise<void> => {
-  const { 
-    imagen, 
-    codigo_barras, 
-    nombre_producto, 
-    marca, 
-    nombre_proveedor, 
-    tamanio, 
+  const {
+    imagen,
+    codigo_barras,
+    nombre_producto,
+    marca,
+    nombre_proveedor,
+    tamanio,
     categoria,
-    precio_pieza, 
-    precio_caja, 
-    cantidad_caja, 
-    pasillo,  
-    existencia_almacen, 
-    existencia_exhibe ,
+    precio_pieza,
+    precio_caja,
+    cantidad_caja,
+    pasillo,
+    existencia_almacen,
+    existencia_exhibe,
     stock_almacen,
     stock_exhibe
   } = req.body;
 
   try {
     const existeProducto = await Producto.findOne({ codigo_barras });;
-    if(existeProducto){
-      res.status(400).json({ message: 'EL producto ya existe'});
+    if (existeProducto) {
+      res.status(400).json({ message: 'EL producto ya existe' });
       return;
     }
 
-    const nuevoProducto = new Producto({ 
+    const nuevoProducto = new Producto({
       imagen,
       codigo_barras,
       nombre_producto,
       marca,
-      nombre_proveedor: Array.isArray(nombre_proveedor) ? nombre_proveedor : [nombre_proveedor], 
+      nombre_proveedor: Array.isArray(nombre_proveedor) ? nombre_proveedor : [nombre_proveedor],
       tamanio,
       categoria,
       precio_pieza,
@@ -52,17 +52,29 @@ export const crearProducto = async (req: Request, res: Response): Promise<void> 
     const guardarProducto = await nuevoProducto.save();
     res.status(201).json('Producto guardado con exito');
   } catch (error: any) {
-    res.status(400).json({ message: error.message }); 
+    res.status(400).json({ message: error.message });
   }
 };
 
 /obtiene todos los productos almacenista/
-export const obtenerProductos  = async (req: Request, res:Response):Promise<void> => {
+export const obtenerProductos = async (req: Request, res: Response): Promise<void> => {
   try {
     const productos = await Producto.find();
-    res.status(200).json(productos)
+
+    if (productos.length === 0) {
+      res.status(404).json({
+        message: 'No hay productos'
+      })
+      return
+    }
+
+    res.status(200).json({
+      message: 'Lista de productos',
+      lista: productos
+    })
+
   } catch (error: any) {
-    res.status(500).json({ message: error.message})
+    res.status(500).json({ message: error.message })
   }
 }
 
@@ -71,14 +83,14 @@ export const obtenerProductoPorCodigo = async (req: Request, res: Response): Pro
   const { codigo_barras } = req.params;
 
   try {
-    const producto = await Producto.findOne({ codigo_barras});
-    if(producto){
+    const producto = await Producto.findOne({ codigo_barras });
+    if (producto) {
       res.status(200).json(producto);
-    }else{
-      res.status(404).json({ message: 'El producto no existe'});
+    } else {
+      res.status(404).json({ message: 'El producto no existe' });
     }
-  } catch (error : any) {
-    res.status(500).json({ message: error.message});
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -88,17 +100,17 @@ export const obtenerProductosNombre = async (req: Request, res: Response): Promi
 
   try {
     const productos = await Producto.find(
-      { nombre_producto: { $regex: new RegExp(nombre_producto,'i')}}
+      { nombre_producto: { $regex: new RegExp(nombre_producto, 'i') } }
     );
-    if(productos.length === 0){
-      res.status(404).json({ message: `No existe productos con el nombre ${nombre_producto}`})
+    if (productos.length === 0) {
+      res.status(404).json({ message: `No existe productos con el nombre ${nombre_producto}` })
       return
     }
-      
+
     res.status(200).json(productos);
 
   } catch (error: any) {
-    res.status(500).json({ message: error.message})
+    res.status(500).json({ message: error.message })
   }
 }
 
@@ -108,85 +120,85 @@ export const obtenerProductosCategoria = async (req: Request, res: Response): Pr
 
   try {
     const productos = await Producto.find(
-      { categoria: { $regex: new RegExp(categoria,'i')}}
+      { categoria: { $regex: new RegExp(categoria, 'i') } }
     );
 
-    if ( productos.length === 0 ){
-      res.status(404).json({ message: `No hay productos de esta categoria ${categoria}`});
+    if (productos.length === 0) {
+      res.status(404).json({ message: `No hay productos de esta categoria ${categoria}` });
       return
     }
-    
+
     res.status(200).json(productos);
 
   } catch (error: any) {
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message });
   }
 }
 
 /obtiene producto por pasillo- almacenista/
-export const obtenerProductosPasillo = async (req: Request, res:Response): Promise<void> => {
+export const obtenerProductosPasillo = async (req: Request, res: Response): Promise<void> => {
   const { pasillo } = req.params;
 
   try {
     const pasillos = await Producto.find(
-      { pasillo: {$regex: new RegExp(pasillo,'i')}}
+      { pasillo: { $regex: new RegExp(pasillo, 'i') } }
     );
 
-    if( pasillos.length === 0){
-      res.status(404).json({ message: `No existe el pasillo ${pasillo}`})
+    if (pasillos.length === 0) {
+      res.status(404).json({ message: `No existe el pasillo ${pasillo}` })
       return
     }
 
     res.status(200).json(pasillos);
-    
-  } catch (error:any) {
-    res.status(500).json({ message: error.message})
+
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
   }
 }
 
 /obtiene producto por marca- almacenista/
-export const obtenerProductosMarca = async (req: Request, res:Response): Promise<void> => {
+export const obtenerProductosMarca = async (req: Request, res: Response): Promise<void> => {
   const { marca } = req.params;
 
   try {
     const marcas = await Producto.find(
-      { marca: {$regex: new RegExp(marca,'i')}}
+      { marca: { $regex: new RegExp(marca, 'i') } }
     );
 
-    if( marcas.length === 0){
-      res.status(404).json({ message: `No existe la marca ${marca}`})
+    if (marcas.length === 0) {
+      res.status(404).json({ message: `No existe la marca ${marca}` })
       return
     }
 
     res.status(200).json(marcas);
-    
-  } catch (error:any) {
-    res.status(500).json({ message: error.message})
+
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
   }
 }
 
 /obtiene producto por tamaño- almacenista/
-export const obtenerProductosTamanio = async (req: Request, res: Response):Promise<void> => {
+export const obtenerProductosTamanio = async (req: Request, res: Response): Promise<void> => {
   const { tamanio } = req.params;
 
   try {
     const tamanios = await Producto.find(
-      {tamanio: {$regex: new RegExp(tamanio,'i')}}
+      { tamanio: { $regex: new RegExp(tamanio, 'i') } }
     );
 
-    if(tamanios.length === 0){
-      res.status(404).json({ message: `No existen productos con este tamaño ${tamanio}`})
+    if (tamanios.length === 0) {
+      res.status(404).json({ message: `No existen productos con este tamaño ${tamanio}` })
     }
 
-    res.status(200).json({tamanios})
-  } catch (error:any) {
-    res.status(500).json({ message: error.message})
+    res.status(200).json({ tamanios })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
   }
 }
 
 /obtiene producto por precio entre un rango/
 export const obtenerProductosPrecio = async (req: Request, res: Response): Promise<void> => {
-  const { rango } = req.params; 
+  const { rango } = req.params;
 
   try {
     if (!rango.includes('-')) {
@@ -243,7 +255,7 @@ export const actualizarProducto = async (req: Request, res: Response): Promise<v
     }
 
     const producto = await Producto.findOne({ codigo_barras });
-    
+
     if (!producto) {
       res.status(404).json({ message: 'Producto no encontrado' });
       return;
@@ -265,19 +277,19 @@ export const actualizarProducto = async (req: Request, res: Response): Promise<v
     });
 
     producto.precio_pieza = nuevo_precio;
-    
+
     await Promise.all([
       producto.save(),
       registroHistorico.save()
     ]);
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: 'Precio actualizado e historial guardado',
       producto_actualizado: producto
     });
 
   } catch (error: any) {
-    res.status(500).json({ 
+    res.status(500).json({
       message: 'Error al actualizar el precio'
     });
   }
@@ -296,7 +308,7 @@ export const eliminarProducto = async (req: Request, res: Response): Promise<voi
     }
 
     res.status(200).json({ message: 'Producto eliminado exitosamente' });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({
       message: error.message
     })
@@ -304,14 +316,14 @@ export const eliminarProducto = async (req: Request, res: Response): Promise<voi
 }
 
 /Cambiar estatus de producto- almacenista/
-export const cambiarEstatus = async (req: Request, res : Response): Promise<void> => {
+export const cambiarEstatus = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
   const { status } = req.body;
 
   try {
     const producto = await Producto.findOne({ codigo_barras });
 
-    if (!producto){
+    if (!producto) {
       res.status(404).json({
         message: 'Producto no encontrado'
       })
@@ -326,7 +338,7 @@ export const cambiarEstatus = async (req: Request, res : Response): Promise<void
       message: 'Estatus fue actualizado',
       producto_actualizado: producto
     })
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({
       message: error.message
     })
@@ -334,21 +346,21 @@ export const cambiarEstatus = async (req: Request, res : Response): Promise<void
 }
 
 /Actualizar existencias- almacenista/
-export const actualizarExistencias = async (req: Request, res:Response):Promise<void> => {
+export const actualizarExistencias = async (req: Request, res: Response): Promise<void> => {
   const { codigo_barras } = req.params;
   const { valAlmacen, fecha_caducidad } = req.body;
 
   try {
-    if (isNaN(Number(valAlmacen))){
+    if (isNaN(Number(valAlmacen))) {
       res.status(400).json({
         message: 'El valor debe ser un numero valido'
       });
       return;
     }
 
-    const producto = await Producto.findOne({ codigo_barras});
+    const producto = await Producto.findOne({ codigo_barras });
 
-    if (!producto){
+    if (!producto) {
       res.status(404).json({
         message: 'Producto no encontrado'
       });
@@ -379,11 +391,11 @@ export const actualizarExistencias = async (req: Request, res:Response):Promise<
     })
 
     numLote++;
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({
       message: error.message
     });
   }
-  
+
 }
 

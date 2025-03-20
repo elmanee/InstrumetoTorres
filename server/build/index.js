@@ -17,8 +17,10 @@ const database_1 = require("./database");
 const clienteRoutes_1 = __importDefault(require("./routes/clienteRoutes"));
 const almacenistaRoutes_1 = __importDefault(require("./routes/almacenistaRoutes"));
 const vendedorRoutes_1 = __importDefault(require("./routes/vendedorRoutes"));
-const cors_1 = __importDefault(require("cors"));
 const uploadRoutes_1 = __importDefault(require("./routes/uploadRoutes"));
+const cors_1 = __importDefault(require("cors"));
+const multer_1 = __importDefault(require("multer"));
+const path_1 = __importDefault(require("path"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -30,24 +32,33 @@ class Server {
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
-        this.app.use('/uploads', express_1.default.static('uploads'));
+        // Configurar Multer para almacenar archivos en la carpeta 'uploads'
+        const storage = multer_1.default.diskStorage({
+            destination: path_1.default.join(__dirname, '../uploads'),
+            filename: (_req, file, cb) => {
+                cb(null, file.originalname);
+            },
+        });
+        const upload = (0, multer_1.default)({ storage });
+        // Ruta estática para acceder a los archivos subidos
+        this.app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
     }
     routes() {
         this.app.use('/api', clienteRoutes_1.default);
         this.app.use('/api', almacenistaRoutes_1.default);
         this.app.use('/api', vendedorRoutes_1.default);
-        this.app.use('/api', uploadRoutes_1.default);
+        this.app.use('/api', uploadRoutes_1.default); // Rutas para subir archivos
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield (0, database_1.connectToDatabase)();
                 this.app.listen(this.app.get('port'), () => {
-                    console.log(`Server on port ${this.app.get('port')}`);
+                    console.log(`🚀 Server running on port ${this.app.get('port')}`);
                 });
             }
             catch (error) {
-                console.error('Error al iniciar el servidor:', error);
+                console.error('❌ Error al iniciar el servidor:', error);
             }
         });
     }

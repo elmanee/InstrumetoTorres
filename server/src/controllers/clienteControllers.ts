@@ -10,7 +10,7 @@ export const obtenerProductosActivos  = async (req: Request, res:Response):Promi
 
     if(productos.length === 0){
       res.status(404).json({
-        message: 'No hay produtos'
+        message: 'No hay productos'
       })
       return
     }

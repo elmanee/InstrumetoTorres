@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ProductoService } from '../../../services/producto.service';
+import { Producto, ProductoService } from '../../../services/producto.service';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-inventario',
@@ -9,29 +10,58 @@ import { ProductoService } from '../../../services/producto.service';
 })
 export class InventarioComponent {
   productos: any[] = [];
+  loading: boolean = true;
+  filtroSeleccionado: string = 'nombre';
+  busquedaTexto: string = '';
+  selectedProducto: Producto | null = null;
+  error: string | null = null;
 
   constructor(private productoService: ProductoService) {}
 
   ngOnInit(): void {
-    this.obtenerProductos();
+    this.cargarProductos();
   }
 
-  obtenerProductos(): void {
-    this.productoService.obtenerProductos().subscribe((data: any) => {
-      this.productos = data;
+  cargarProductos(): void {
+    this.loading = true;
+    this.productoService.obtenerProductos().subscribe({
+      next: (response) => {
+        this.productos = response.lista;
+        this.loading = false;
+        console.log('Productos obtenidos:', response.lista);
+      },
+      error: (err) => {
+        this.error = 'Error al cargar los productos. Intente nuevamente.';
+        this.loading = false;
+        console.error('Error al obtener productos:', err);
+      }
     });
+  }
+
+  eliminarProducto(codigo_barras: number): void {
+    if (confirm('¿Estás seguro de eliminar este producto?')) {
+      this.productoService.eliminarProducto(codigo_barras).subscribe(
+        () => {
+          console.log(`Producto con código ${codigo_barras} eliminado`);
+          this.productos = this.productos.filter(p => p.codigo_barras !== codigo_barras);
+        },
+        (error) => {
+          console.error('Error al eliminar producto:', error);
+        }
+      );
+    }
   }
 
   actualizarProducto(producto: any): void {
     console.log('Actualizar producto:', producto);
   }
-
-  eliminarProducto(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar este producto?')) {
-      this.productoService.eliminarProducto(id).subscribe(() => {
-        alert('Producto eliminado');
-        this.obtenerProductos(); // Recargar lista
-      });
+  
+    abrirModal(producto: Producto): void {
+      this.selectedProducto = producto; 
+      const modalElement = document.getElementById('productoModal');
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
     }
-  }
 }
